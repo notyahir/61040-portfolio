@@ -21,6 +21,9 @@ Read the bio of my favorite character in Jojo! [Jolyne Cujoh](https://jojo.fando
 
 
 ## Table of Contents
-[Link to Assignment 1](assignments/assignment1.md)
 
-[Link to Assignment 2](assignments/assignment2.md)
+Assignments:
+1. [Link to Assignment 1](assignments/assignment1.md)
+
+PSETs:
+1. [Link to PSET 1](psets/pset1.md)
