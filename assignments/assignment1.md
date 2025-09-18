@@ -172,7 +172,7 @@ Going to the gym alone can be a mentally taxing task for those. However, having 
     * One tap ping
         * What it does: The user taps a button to broadcast an announcement to friends about their gym intent such as: leaving in 30, leaving now, or a window. Pings expire, don't spam, and don't require location.
         * Why it helps: Maintains privacy for users (initiator and responders). Initiator can have friends join and responders have a clear window to join. The opportunity for a group workout is open without the necessity of much coordination.
-    * Smart escalation
+    * Smart escalation          
         * What it does: If no one responds within a timeframe (ex. 10 min), the app offers the opportunity to expand the ping to friends-of-friends or go into a Solo Mode.
         * Why it helps: Preserves momentum for the initiator (primary user) by allowing them to find a buddy or just go solo and still get a productive workout. Prevents disrupting other users by allowing the initiator to go solo.
     * Buddy streaks and accountability nudges

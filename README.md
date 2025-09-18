@@ -22,3 +22,5 @@ Read the bio of my favorite character in Jojo! [Jolyne Cujoh](https://jojo.fando
 
 ## Table of Contents
 [Link to Assignment 1](assignments/assignment1.md)
+
+[Link to Assignment 2](assignments/assignment2.md)
