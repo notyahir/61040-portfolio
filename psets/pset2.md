@@ -183,4 +183,27 @@ For a word as nonce strategy, we can use the word generation concept from earlie
 **when**   
     Request.shortenUrlMemorable(owner: User, targetUrl, shortUrlBase)  
     WordNonceGeneration.generate(context: shortUrlBase): (nonce: String)  
-**then** UrlShortening.register(shortUrlSuffix: nonce, shortUrlBase, targetUrl)
+**then** UrlShortening.register(nonce: String, shortUrlBase, targetUrl)
+
+
+#### 3. targetUrl In Analytics
+
+This feature is undesirable because it violates privacy intent as it was described in the requirement where analytics are only viewable to the "user who registered the shortening". Grouping by targetUrl pushes shortUrl aggregation whch risks exposing information from links you didn't create. It also breaks clean modularity since grouping by target forces analytics to depend on UrlShortening
+
+#### 4. Less Guessable Urls
+
+It would be to include this to enhance privacy and reduce any hacker capabilities. It reduces brute-force risks at a low cost without affecting ownership or analytic concepts. To do this, we can modify our NonceGeneration to a more secure form called SecureNonceGeneration that is designed to output less guessable urls which can be done by adding additional contexts. The syncs would be the same but a bit more private.
+
+**sync** generatePrivate  
+**when** Request.shortenUrlPrivate(owner, targetUrl, shortUrlBase)  
+**then** SecureNonceGeneration.generate(context: shortUrlBase): (nonce: String)
+
+**sync** registerPrivate  
+**when**   
+    Request.shortenUrlPrivate(owner, targetUrl, shortUrlBase)  
+    SecureNonceGeneration.generate(context: shortUrlBase): (nonce: String)  
+**then**  UrlShortening.register(nonce: String, shortUrlBase, targetUrl)
+
+#### 5. Support Reporting Analytics to Unregistered Creators
+
+While this feature is definitely possible to implement, it would be undesirable because it violates the main requirement that analytics are supposed to be viewable only by the "user who registered the shortening". If there is no registration, there is no authorized analytics to view. To fix this, it adds significant operational complexity with tokens issuing, expiry, etc. Not only this, but it weakens privacy + control since tokens can be lost or even leaked. While possible, it seems that the tradeoffs are not worth given our initial idea as well.

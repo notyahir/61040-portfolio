@@ -27,3 +27,5 @@ Assignments:
 
 PSETs:
 1. [Link to PSET 1](psets/pset1.md)
+
+2. [Link to PSET 2](psets/pset2.md)
