@@ -10,11 +10,11 @@ In short, contexts "scope" uniqueness to a certain level so that something like 
 
 For our URL shortener, the context will be the domain. This makes nonces (generated strings) unique to each domain, which means different users get to reuse the same suffix and generated strings under different domains without conflicts.
 
-### 2. Storing Used String
+### 2. Storing Used Strings
 
 The principle of NonceGeneration is each generate returns a string not returned before for that context", the key here is "not returned before for that context". This is a principle that must be held across time, thus, we need to store the set of used strings to ensure we remember so we can reject repeats.
 
-The set of used strings in the specification is going to be exactly equal to the generated strings made each time our counter incremented (when generate was called). Essentially, after n calls, our counter will be at n and we will have generated n strings which is exactly equal to the number of used strings. AF(s) = {s[i]; 0 < i <= n}
+The set of used strings in the specification is going to be exactly equal to the generated strings made each time our counter incremented (when generate was called). Essentially, after n calls, our counter will be at n and we will have generated n strings which is exactly equal to the number of used strings. used_set = AF(s) = {s[i] | 0 <= i < n} where s is the function that encodes based on the current counter.
 
 ### 3. Words As Nonces
 
@@ -34,7 +34,7 @@ WordNonceGeneration
             a vocabulary set of Strings
 
     actions:
-        configure(context: Context, vocabulary: Set[Strings])
+        configure(context: Context, vocabulary: Set[String])
             effects sets vocabulary for context
         generate(context: Context): (nonce: String)
             requires vocabulary is non-empty
@@ -69,7 +69,7 @@ generate() needs shortUrlBase, register needs targetUrl, nonce, and shortUrlBase
 **sync** registerFixed  
 **when** Request.shortenUrl(targetUrl)
          NonceGeneration.generate(): (nonce)  
-**then** UrlShotening.register(shortUrlSuffix: nonce, shortUrlBase: "https://bit.ly/", targetUrl)
+**then** UrlShortening.register(shortUrlSuffix: nonce, shortUrlBase: "https://bit.ly/", targetUrl)
 
 
 **sync** setExpiry  
@@ -79,8 +79,8 @@ generate() needs shortUrlBase, register needs targetUrl, nonce, and shortUrlBase
 ### 5. Adding a sync
 
 **sync** expire  
-**when** ExperingResource.expireResource(): (resource: shortUrl)  
-**then** UrlShotening.delete(shortUrl)
+**when** ExpiringResource.expireResource(): (resource: shortUrl)  
+**then** UrlShortening.delete(shortUrl)
 
 **Note**: Here we are deleting the shorturl which we set an expiry on. However, a user could choose to delete a url before the expiry is done. As a result, the expiry can fire even though it is deleted. We can make a requirement that we check if the url exists before issuing the command to expire the resource.
 
@@ -129,8 +129,7 @@ Our constraints are to not change any of the existing concepts however we want t
     
     actions
         ensure (shortUrl: string)
-            requires no counter exists
-            effects creates a counter for shortUrl at 0
+            effects creates a counter for shortUrl at 0 if none exists, otherwise nothing
         increment (shortUrl: string)
             requires a counter exists for shortUrl
             effect increments count: count = count + 1, count -> count + 1
@@ -145,15 +144,17 @@ Our constraints are to not change any of the existing concepts however we want t
     Request.shortenUrl(owner: User, targetUrl, shortUrlBase)  
     UrlShortening.register(): (shortUrl)  
 **then**  
-    UrlOwnership.record(shortUrl: owner:User)  
-    AccessCounting.ensure(shortUrl)
+    UrlOwnership.record(shortUrl, owner:User)  
+    AccessCount.ensure(shortUrl)
 
 **sync** countLookup  
 **when** UrlShortening.lookup(shortUrl)  
 **then** AccessCount.increment(shortUrl)
 
 **sync** viewAnalytics  
-**when** UrlOwnership.isOwner(shortUrl, requester: User): (result: True)  
+**when**   
+    Request.viewAnalytics(shortUrl, requester: User)
+    UrlOwnership.isOwner(shortUrl, requester: User): (result: True)  
 **then** AccessCount.read(shortUrl): (count: Number)
 
 Notes: for viewAnalytics, in order for **then** to fire, the condition for **when** must be TRUE. Enforces that only the owner can see it
@@ -177,18 +178,18 @@ For a word as nonce strategy, we can use the word generation concept from earlie
 
 **sync** wordGenerate  
 **when** Request.shortenUrlMemorable(owner: User, targetUrl, shortUrlBase)  
-**then** WordNonceGeneration.generate(context: shortUrlBase): (nonce: String)
+**then** WordNonceGeneration.generate(context: shortUrlBase)
 
 **sync** wordRegister  
 **when**   
     Request.shortenUrlMemorable(owner: User, targetUrl, shortUrlBase)  
-    WordNonceGeneration.generate(context: shortUrlBase): (nonce: String)  
-**then** UrlShortening.register(nonce: String, shortUrlBase, targetUrl)
+    WordNonceGeneration.generate(context: shortUrlBase): (nonce)  
+**then** UrlShortening.register (shortUrlSuffix: nonce, shortUrlBase, targetUrl)
 
 
 #### 3. targetUrl In Analytics
 
-This feature is undesirable because it violates privacy intent as it was described in the requirement where analytics are only viewable to the "user who registered the shortening". Grouping by targetUrl pushes shortUrl aggregation whch risks exposing information from links you didn't create. It also breaks clean modularity since grouping by target forces analytics to depend on UrlShortening
+This feature is undesirable because it violates privacy intent as it was described in the requirement where analytics are only viewable to the "user who registered the shortening". Grouping by targetUrl pushes shortUrl aggregation which risks exposing information from links you didn't create. It also breaks clean modularity since grouping by target forces analytics to depend on UrlShortening
 
 #### 4. Less Guessable Urls
 
@@ -196,13 +197,13 @@ It would be to include this to enhance privacy and reduce any hacker capabilitie
 
 **sync** generatePrivate  
 **when** Request.shortenUrlPrivate(owner, targetUrl, shortUrlBase)  
-**then** SecureNonceGeneration.generate(context: shortUrlBase): (nonce: String)
+**then** SecureNonceGeneration.generate(context: shortUrlBase)
 
 **sync** registerPrivate  
 **when**   
     Request.shortenUrlPrivate(owner, targetUrl, shortUrlBase)  
-    SecureNonceGeneration.generate(context: shortUrlBase): (nonce: String)  
-**then**  UrlShortening.register(nonce: String, shortUrlBase, targetUrl)
+    SecureNonceGeneration.generate(context: shortUrlBase): (nonce)  
+**then**  UrlShortening.register (shortUrlSuffix: nonce, shortUrlBase, targetUrl)
 
 #### 5. Support Reporting Analytics to Unregistered Creators
 
