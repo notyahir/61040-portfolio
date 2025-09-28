@@ -1,4 +1,4 @@
-# Assignment 2
+# Pset 1
 
 ## Exercise 1: Reading A Concept - Gift Registration
 
