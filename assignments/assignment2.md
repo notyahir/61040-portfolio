@@ -240,7 +240,28 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
 
 ## UI Sketches
 
-![My sketches](assignment_assets/assignment2/ui_sketches.png)
+Some notes: 
+- Any words that are boxed or any words in brackets or near [] indicate a pressable action. An example of this would be refresh. 
+- In all the pages, "Resurfacer" is in the top-left which redirects all users to the home page (setup page). 
+- There is a profile icon in the top right for users to login or with the connect button on the setup page.
+- I added a flow diagram that shows the state of how certain screens would be reached. The main feature screens would be reached after a user connects by pressing one of the buttons
+
+1. Setup Page
+    - On this page, we let the user decide which options they want to modify when connecting to the music platform.
+    - Once conneced, they can pick from Time-capsule Shuffler, Swipe Sessions, or Playlist Surgery
+2. Time-capsule Shuffler
+    - Shuffles your liked songs, allows you to refresh and select what "bias" you would want (targeted towards old songs, neutral, or more recent)
+    - Has a now-playing section, alongside a song list display with scores
+3. Swipe Sessions
+    - Mimics a dating-app swipe feature or Tiktok scrolling feature. A user can swipe in different directions after listening to snippets of a song to either keep, snooze, or add the song to a playlist.
+    - Has a track card displaying on the screen of the track that a user can swipe
+4. Playlist Surgery
+    - Allows you to pick playlists and scan
+    - In a section below, it shows the findings of duplicates, unavailable tracks, and potential mood outliers. Give user option to pick things
+    - Changelog is below showing timestamps with changeId alongside the changes made to a playlist
+
+    
+![My UI sketches](assignment_assets/assignment2/ui_sketches_refined.png)
 
 
 ## User Journey
