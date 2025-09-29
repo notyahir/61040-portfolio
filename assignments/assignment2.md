@@ -1,24 +1,21 @@
 # Assignment 2
 ## Problem Statement
 ### Personal Music Listening & Playlist Curation
-- Focused on how heavy listeners or users of a music listening service save, revisit, and organize the music they love over time. 
-- For me, I am a big lover of music, I specifically use Spotify as my main streaming service. As a result, my liked songs has grown into the thousands, and I know there have been tracks that have slipped from my memory or are tracks on my playlists that just don't fit the vibe anymore, which means old bangers get played less! 
-- This is an important domain because "great listening" isn't solely about discovery, but it's also about resurfacing the right songs so that the favorites keep on living, not just aggregating dust
-- The goal isn't just about finding new music, it's about reusing old favorites at the right moment. No one wants to sit down and scroll their liked songs every single time just to revisit some old classics!
+Reengaging with old liked songs: I am focused on how heavy listeners or users of a music streaming service save, revisit, and organize the music they love over time. For me, I am a big music listener, I specifically use Spotify as my main streaming service. As a result, my liked songs has grown into the thousands, and I know there have been tracks that have slipped from my memory or playlists that just don't fit the vibe anymore, which means old bangers (good songs) get played less! This is an important domain because "great listening" isn't solely about discovery, but it's also about resurfacing the right songs so that the favorites keep on living, not just aggregating dust. To reiterate, the goal isn't just about finding new music, it's about relistening to old favorites at the right moment, no matter how old! No one wants to sit down and scroll their liked songs every single time just to revisit some old classics.
 
 ### "Forgotten Bangers" get buried as libraries grow
-- For listeners with a very large "Liked Songs" catalog, great tracks fade from a user's rotation. Perhaps it is because the user no longer enjoys but there are also additional factors contributing to that. Finding them becomes a huge time-sink manually scrolling, and it's not fun when all you're doing is looking at tracks you probably don't even remember. An algorithm such as Tiktok or Instagram Reels would make it fun but that's not what it is.
-- Beyond time-sinks, older playlists decay in quality as a user's music taste changes or shifts over time, while there can also be streaming platform issues such as duplicate songs and removed songs.
-- While there are recap features such as Spotify Wrapped, it is "retrospective" and the playlist is comprised of only 100 songs from the past year. It doesn't necessarily target continuous resurfacing on a day-to-day level. The result of all this is that users replay fewer older favorites and end up with once-beloved playlists they don't listen to as much anymore as they don't feel "right".
+For listeners with a very large "Liked Songs" catalog, great tracks fade from a user's rotation. Perhaps it is because the user no longer enjoys the tracks but there are also additional factors contributing, specifically, finding them becomes a huge time-sink manually scrolling, and it's not fun simply reading the names of tracks you may not remember. An interface similar to Tiktok or Instagram Reels has capabilities to make it more entertaining.
+
+Beyond time-sinks, older playlists decay in quality as a user's music taste changes or shifts over time, while also issues such as duplicate songs and removed songs. While there are recap features such as Spotify Wrapped, it is "retrospective" and the playlist is comprised of only 100 songs from the past year. It doesn't necessarily target continuous resurfacing on a day-to-day level. The result of all this is that users replay fewer older favorites and end up with once-beloved playlists that aren't played as much anymore.
 
 ### Stakeholders
 - Listener (primary): Heavy music service user with a large music catalog, wants a low-effort way to bring buried favorites and revive old playlists
-- Friends/Followers (secondary): Benefit from shared mixes with older classics added
+- Friends/Followers (secondary): Benefit from shared mixes with older classics added.
 - Platform: Spotify/Apple/music platforms whose APIs, scopes, and rate limits define what’s feasible; furthermore, if users receive older classics, the platform receive additional plays and engagement
 - Artists & Label (owners): Content holders who benefit from new plays and streams as tracks resurface.
 
 ### The Evidence and Comparables
-* [Spotify removes it's 10,000-song library limit](https://www.theverge.com/2020/5/26/21270409/spotify-song-library-limit-removed-music-downloads-playlists-feature) Spotify removing the limit shows how users are running into large, unwieldly libraries.
+* [Spotify removes it's 10,000-song library limit](https://www.theverge.com/2020/5/26/21270409/spotify-song-library-limit-removed-music-downloads-playlists-feature) Spotify removing the limit shows how users are running into large, unwieldy libraries.
 * [Users share their library sizes](https://www.reddit.com/r/spotify/comments/1j6g2mf/how_many_liked_songs_do_you_have_and_how_long). Demonstrating the need for Spotify to make this change and providing anecdotal evidence of users reaching this limit
 * [200 million songs on streaming services](https://www.musicbusinessworldwide.com/there-are-now-more-than-200m-tracks-on-audio-streaming-services-nearly-100m-of-them-attracted-no-more-than-10-plays-each). This demonstrates how the firehose is real and that not only are users discovering new music but the catalog for new music is massive and ever-growing.
 * [Users note songs vanishing from liked songs](https://www.narendravardi.com/vanishing-tunes-ten-percent-of-my-liked-songs-disappeared-on-spotify/). Some users ranting about how a percentage of their songs vanish which could be due to license renewal. This causes issues where some users may never know and forget about songs they once loved!
@@ -30,12 +27,12 @@
 ### Resurfacer 
 Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlists fall apart. Resurfacer brings back your forgotten bangers into rotation and keeps your playlists healthy.
 #### Time-Capsule Shuffle
-- An auto-mix that favors "slept-on" favorites by scoring each saved track with a "staleness" score (based off how long it's been since you saved it, when you saved it, and how often you've been skipping it), and resurfaces it to try and fit the listener's vibe. One tap saves any resurfaced song to a new fresh playlist
+- An auto-mix that favors "slept-on" favorites by scoring each saved track with a "staleness" score (based off user like metadata), and resurfaces it to try and fit the listener's vibe. One tap saves any resurfaced song to a new fresh playlist
 - Why it helps: You get effortless rediscovery instead of needing to endlessly scroll. The mix stays personal and intentionally backward-looking to revive old gems!
 - Impact on stakeholders: Listeners replay more of their old favorites, friends get mixes from friends with resurfaced classics, artists & labels see revived streams on older catalogs, and platforms benefit from overall engagement
 
 #### Memory Cards
-- A swipeable song card mode for bite-sized resurfacing sessions. A "Tiktok/Tinder" setup where a user can swipe a song if they like it or not! "Keep" boosts a tracks presence in future mixes, "Add" drops it straight into a playlist, and "Snooze" hides it for a while so it doesn't pop up again for a while. Adapts to your feedback over time!
+- A swipeable song card mode for bite-sized resurfacing sessions. A "Tiktok/Memory Card" setup where a user can swipe a song if they like it or not! "Keep" boosts a tracks presence in future mixes, "Add" drops it straight into a playlist, and "Snooze" hides it for a while so it doesn't pop up again for a while. Adapts to your feedback over time!
 - Why it helps: Reduces decision fatigue and turns a tedious monotonous scrolling hunt into a playful 15-30 second activity that actively works towards rebuilding playlists
 - Impact on Stakeholders: Listeners control the pace and vibes through a fun resurfacing session, friends benefit from better mixes, platforms/artists gain listeners, and platforms get engagement but also limit the scope of what is feasible through their API.
 
@@ -66,20 +63,20 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
             an expiry_timestamp Float
         
     actions:
-    - link(user: User, platform: String): (platformLink: Link)
-        requires: user exists, platform is valid music platform
-        effects: creates and returns a Link
+        - link(user: User, platform: String): (platformLink: Link)
+            requires: user exists, platform is valid music platform
+            effects: creates and returns a Link
 
-    - refresh(user: User, platform: String, token_refresh: String)
-        requires: Link exists for user on platform
-        effects: updates token, prolongs expiration
+        - refresh(user: User, platform: String, token_refresh: String)
+            requires: Link exists for user on platform
+            effects: updates token, prolongs expiration
         
-    - revoke(user: User, platform: String)
-        requires: Link exists
-        effects: deletes Link with associated tokens
+        - revoke(user: User, platform: String)
+            requires: Link exists
+            effects: deletes Link with associated tokens
 
-    - can(user: User, link: Link): (ok: Boolean)
-        effects: returns whether a Link has the needed access and availability to do an action on the platform
+        - can(user: User, link: Link): (ok: Boolean)
+            effects: returns whether a Link has the needed access and availability to do an action on the platform
 
 **Concept 2: Library Tracks and Playlist Grabber**
 
@@ -237,6 +234,12 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
     **when**  SwipeSessions.snooze(sessionId, track, days [Optional])  
     **then** TrackScoring.snooze(user, track, days [Optional])  
 
+**How Does It Work: A Brief Note**
+- PlatformLink is the ONLY concept that touches authentication and platform scope. Any read/write request gets passed through it so that the other concepts can remain token-free and/or platform-agnostic. Our goal is to try and keep the concepts as independent as possible.
+- LibraryCache plays the role of gathering the materials of what we need. Liked tracks, playlists, metadata, audio features.
+- TrackScoring scores each track in a user's catalog and keeps them in either a keep or snooze list. Used for analzying and setting up. A simple report from score can help organize liked songs into our time-capsule shuffler if wanted
+- SwipeSessions is the Tiktok/Memory Card workflow: get tracks -> present a track card -> user swipes for an action -> keep/add/snooze. Doesn't compute scores or store tokens, just orchestrates actions
+- PlaylistHealth helps revitalize playlists and provides reports on playlists and the ability to modify playlists with remove/replace/move (tag). Since edits go through PlatformLink, LibraryCache refreshes after, and all concepts stay in sync!
 
 ## UI Sketches
 
@@ -253,14 +256,14 @@ Some notes:
     - Shuffles your liked songs, allows you to refresh and select what "bias" you would want (targeted towards old songs, neutral, or more recent)
     - Has a now-playing section, alongside a song list display with scores
 3. Swipe Sessions
-    - Mimics a dating-app swipe feature or Tiktok scrolling feature. A user can swipe in different directions after listening to snippets of a song to either keep, snooze, or add the song to a playlist.
+    - Mimics a memory card swipe feature or Tiktok scrolling feature. A user can swipe in different directions after listening to snippets of a song to either keep, snooze, or add the song to a playlist.
     - Has a track card displaying on the screen of the track that a user can swipe
 4. Playlist Surgery
     - Allows you to pick playlists and scan
     - In a section below, it shows the findings of duplicates, unavailable tracks, and potential mood outliers. Give user option to pick things
     - Changelog is below showing timestamps with changeId alongside the changes made to a playlist
 
-    
+
 ![My UI sketches](assignment_assets/assignment2/ui_sketches_refined.png)
 
 
