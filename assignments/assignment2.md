@@ -240,4 +240,7 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
 
 ## UI Sketches
 
+![My sketches](assignment_assets/assignment2/ui_sketches.png)
+
+
 ## User Journey
