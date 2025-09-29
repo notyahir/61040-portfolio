@@ -75,7 +75,7 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
             requires: Link exists
             effects: deletes Link with associated tokens
 
-        - can(user: User, link: Link): (ok: Boolean)
+        - can(user: User, capability: String): (ok: Boolean)
             effects: returns whether a Link has the needed access and availability to do an action on the platform
 
 **Concept 2: Library Tracks and Playlist Grabber**
@@ -91,28 +91,30 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
             a title       String
             an artist     String
             an available  Boolean
+            a trackId     String
             a tempo       Float [Optional]
             an energy     Float [Optional]
-            a valece      Float [Optional]
+            a valence     Float [Optional]
         - a set of Likes with
             a user        User 
             a track       Track
-            a added_at    Float
+            a added_at_timestamp    Float
         - a set of Plays with
             a user        User
             a track       Track
-            a last_played Float
+            a last_played_timestamp Float
         - a set of Playlists with
             a playlist    String
-            a set of Tracks
+            a set of Tracks as
+                - List<idx: Integer, track: Track>
         
     actions:
         - ingest(user: User)
-            requires: PlatformLink.can(user, "read-library") = True
+            requires: PlatformLink.can read library
             effects: populates Tracks/Likes/Playlists/Plays
 
         - sync(user: User)
-            requires: PlatformLink.can(user, "read-library") = True
+            requires: PlatformLink.can read library
             effects: updates Tracks/Likes/Plays/Playlists every so often
 
         - getLiked(user: User): (tracks: List<{idx: Integer, track: Track}>)
@@ -149,6 +151,9 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
         - score(user: User, track: Track): (s: Float)
             effects: computes a "staleness" score from a user's statistics and adds it to the weights, returns the score
 
+        - preview(user: User, size: Integer [Optioal]): (previewTracks: List<Track>)
+            requires: weight of scores exist, number of weights must be greater than or equal to size variable if specified
+            effects: previews the tracks specified, amount equal to size if specified
         - keep(user: User, track: Track)
             effects: Adds a track to the set of boosts or boosts the float amount that decays over time
 
@@ -171,21 +176,31 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
             a started_at    Float
         
     actions:   
-        - start()
+        - start(user: User, size: Integer [optional]): (sessionId: String)
+            requires: user exists with valid playlists, if integer grab size amount of tracks
+            effects: creates a session with a queue of tracks and start time, returns sessionId
 
-        - next()
+        - next(sessionId: String): (track: Track [Optional])
+            requires: session exists
+            effects: returns next track or none if finished
 
-        - keep()
+        - keep(sessionId: String, track: Track)
+            requires: track exists in session queue and session is valid
+            effects: sends a tag to TrackScoring to update the Keep list
 
-        - snooze()
+        - snooze(sessionId: String, track: Track, time: Integer)
+            requires: track exists in queue and session is valid
+            effects: sends a tag to TrackScoring to update the Snooze list
 
-        - add()
+        - add(sessionId: String, track: Track, playlist: Playlist | newPlaylist)
+            requires: ability to modify playlists if access granted from platform link
+            effects: adds track to existing playlist or creates a new one if user requests
 
 **Concept 5: Playlist Analyzer and Fixer**
 
     concept: PlaylistHealth
 
-    purpose: Detect duplicate, unavailable, and mood outliers of a user's liked songs or playlists, applies reversible modificatons to the playlists to revive.
+    purpose: Detect duplicate, unavailable, and mood outliers of a user's liked songs or playlists, applies reversible modifications to the playlists to revive.
 
     principle: A user can analyze a playlist, which then reports any duplicate songs, unavailable songs, or highlights which songs may no longer fit a user's current vibe. It can calculate from track score but if the user enters an overall theme for a playlist, there is capability for analysis of the overall playlist. Any adjustments made to the playlists can be reversed so a user can retain a "copy" of the original playlist.
 
@@ -200,12 +215,12 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
             an applied_at   Float
         
     actions:
-        - analyze(playlist: Playlist): (report: Report)
-            requires: playlist is available and valid
+        - analyze(user: User, playlist: Playlist): (report: Report)
+            requires: playlist is available and valid for valid user
             effects: generates and returns a report of the playlist analyzing each song as a duplicate, unavailable, or mood outlier. 
 
-        - apply(playlist: Playlist, report: Report): (changeId: String)
-            requires: PlatformLink gives us access to modify playlists and access information
+        - apply(user: User, playlist: Playlist, report: Report): (changeId: String)
+            requires: PlatformLink gives us access to modify playlists and access information, valid playlist and user
             effects: modifies the playlist based off the report and findings
             
         - undo(user: User, changeId: String): (changeId: String)
@@ -222,7 +237,7 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
 2.  
     **sync** updateScores  
     **when**  LibraryCache.sync(user: User)  
-    **then** TrackScoring.score(user: User, track: Track)  
+    **then** TrackScoring.score(user: User, track: Track)   # Works as a rescorer
 
 3.  
     **sync** cardKeep  
@@ -234,12 +249,19 @@ Your "Liked Songs" turned into an ocean! Great tracks get buried and old playlis
     **when**  SwipeSessions.snooze(sessionId, track, days [Optional])  
     **then** TrackScoring.snooze(user, track, days [Optional])  
 
+5. 
+    **sync** surgeryPlaylist  
+    **when** PlaylistHealth.analyze(playlist: Playlist) & PlaylistHealth.apply(user: User, playlist: Playlist, report: Report)  
+    **then** LibraryCache.sync(user: User)
+
 **How Does It Work: A Brief Note**
 - PlatformLink is the ONLY concept that touches authentication and platform scope. Any read/write request gets passed through it so that the other concepts can remain token-free and/or platform-agnostic. Our goal is to try and keep the concepts as independent as possible.
 - LibraryCache plays the role of gathering the materials of what we need. Liked tracks, playlists, metadata, audio features.
-- TrackScoring scores each track in a user's catalog and keeps them in either a keep or snooze list. Used for analzying and setting up. A simple report from score can help organize liked songs into our time-capsule shuffler if wanted
+- TrackScoring scores each track in a user's catalog and keeps them in either a keep or snooze list. Used for analyzing and setting up. A simple report from score can help organize liked songs into our time-capsule shuffler if wanted
 - SwipeSessions is the Tiktok/Memory Card workflow: get tracks -> present a track card -> user swipes for an action -> keep/add/snooze. Doesn't compute scores or store tokens, just orchestrates actions
 - PlaylistHealth helps revitalize playlists and provides reports on playlists and the ability to modify playlists with remove/replace/move (tag). Since edits go through PlatformLink, LibraryCache refreshes after, and all concepts stay in sync!
+
+Note: We use Track and Playlist as a generic type despite implementing it for Spotify. No concept tries to or does depend on Spotify-specific properties. It just needs to suffice with API calls.
 
 ## UI Sketches
 
