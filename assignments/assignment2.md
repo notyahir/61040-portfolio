@@ -288,5 +288,16 @@ Some notes:
 
 ![My UI sketches](assignment_assets/assignment2/ui_sketches_refined.png)
 
+## User Journey: The Story of Yahir
 
-## User Journey
+It's Friday morning, and Yahir is preparing for his roadtrip to Mexico with his family. His roadtrip playlist is out of date since it has been years since he's gone on a roadtrip and his liked songs are in the thousands since the last time he made his playlist! Scrolling won't surface the bangers fast enough and is boring, and the road-trip playlist is off! Desperate for a solution, Yahir opens up the internet and looks up "music playlist revivers" as a joke search since it seems like a random task. However, his eyes stumble across **Resurfacer**. Resurface is an app designed to help sort user's songs, from a music streaming platform, as a fun activity and bring back old liked songs back into their music rotation!
+
+As he clicks on the app, he is brought to a setup screen. He is able to connect his Spotify account but can also determine the permissions that are allowed to read data on his account to mitigate privacy concerns. Yahir taps CONNECT, approves access, and lands on the after access home page. From this point, he is presented with three different options: Time-Capsule Shuffler, Swipe Session, and Playlist Surgery.
+
+Yahir tries out Time-Capsule Shuffler, leaves the bias on old, and hits refresh. A list appears with titles that are more geared towards older "Last Played", and the staleness score. The bottom has a now playing section and he can decide to either keep that track, snooze it, or add it to a playlist. He looks at old songs but finds it similar to scrolling through his liked songs. However, he can observe older songs in a more general layout, however there is more options! 
+
+He goes back and tries out Swipe Sessions. He doesn't input a size but is now presented with track cards from his liked songs. He can swipe to either add a song to a playlist, skip it, snooze it for a while, or keep the song (which boosts). He finds this to be a more friendly fun layout and instantly adds 10 songs out of 30 to a playlist for his roadtrip! 
+
+Following this, he wants to fix his old roadtrip playlist and thus he goes back and presses Playlist Surgery, selects Roadtrip, and taps Analyze. The Findings bucket begins to fill and we see duplicates, unavailable tracks, and even some songs that are just not fitting the vibe (Throat singing in a roadtrip playlist!?). Since it is nicely sorted into three different sections based on these factors, he easily removes duplicates, replaces unavailable tracks, and tags the mood outliers so he can revisit them later to remove them or not. He applies his changes and the change log populates with a new entry that recorded the changes. 
+
+The outcome? Yahir now has found an entertaining way to revisit his old songs but also revive his old roadtrip playlist with broken songs fixed, duplicates cleaned, and a handful of resurfaced classics added in! The flow diagram also illustrates his example experience. In the future, Yahir can see himself reusing the Swipe Sessions or Time-Capsule Shuffler.
