@@ -288,7 +288,7 @@ Some notes:
 
 ![My UI sketches](assignment_assets/assignment2/ui_sketches_refined.png)
 
-## User Journey: The Story of Yahir
+## User Journey: The Story of Yahir - A Listener
 
 It's Friday morning, and Yahir is preparing for his roadtrip to Mexico with his family. His roadtrip playlist is out of date since it has been years since he's gone on a roadtrip and his liked songs are in the thousands since the last time he made his playlist! Scrolling won't surface the bangers fast enough and is boring, and the road-trip playlist is off! Desperate for a solution, Yahir opens up the internet and looks up "music playlist revivers" as a joke search since it seems like a random task. However, his eyes stumble across **Resurfacer**. Resurface is an app designed to help sort user's songs, from a music streaming platform, as a fun activity and bring back old liked songs back into their music rotation!
 
