@@ -27,6 +27,8 @@ Assignments:
 
 2. [Link to Assignment 2](assignments/assignment2.md)
 
+3. [Link to Assignment 3](https://github.com/notyahir/assignment3)
+
 PSETs:
 1. [Link to PSET 1](psets/pset1.md)
 
